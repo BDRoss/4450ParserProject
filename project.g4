@@ -1,0 +1,11 @@
+grammar project;
+start : (value)* EOF;
+value : variableDef;
+WS : [ \t] + -> skip;
+variableDef : identifier ASSIGN (OPERATORS | identifier | DIGITS)(NEWLINE | EOF);
+ASSIGN : ('+=' | '-=' | '*=' | '/=' | '=');
+OPERATORS : ('+' | '-' | '*' | '/' | '%');
+identifier : (LETTERS | '_') (LETTERS | '_' | DIGITS)*;
+LETTERS : ([a-z]+ | [A-Z]+);
+DIGITS : ([0-9]+);
+NEWLINE : ('\r'? '\n' ' '*);
