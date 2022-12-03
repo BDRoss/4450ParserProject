@@ -35,6 +35,15 @@ class projectListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by projectParser#whileLoop.
+    def enterWhileLoop(self, ctx:projectParser.WhileLoopContext):
+        pass
+
+    # Exit a parse tree produced by projectParser#whileLoop.
+    def exitWhileLoop(self, ctx:projectParser.WhileLoopContext):
+        pass
+
+
     # Enter a parse tree produced by projectParser#block.
     def enterBlock(self, ctx:projectParser.BlockContext):
         pass

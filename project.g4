@@ -31,17 +31,21 @@ def nextToken(self):
 
 start : (value)* EOF;
 // Basic building block of code
-value : variableDef | ifelse | expression;
+value : variableDef | ifelse | expression | whileLoop;
 WS : [ ] + -> skip; //Apparently \r\n aren't whitespace, because variables aren't working with them in there
 // Allow for an arbitrary amount of elifs and a single else
 ifelse : (('if') '('? expression '):'? block) (('elif') '('? expression '):'? block)* (('else:') block)?;
+// WHILE
+whileLoop : ('while(' (expression | DIGITS*) '):'? block);
 // define blocks of code, which can include nested values (and more blocks). Thanks, antlr-denter
 block : INDENT (value+ ) NEWLINE? DEDENT?;
-// handle expressions with variable identifiers
-expression : ((IDENTIFIER | DIGITS*) CONDITIONAL (IDENTIFIER | DIGITS*));
+// handle expressions with variable identifiers - want this to be able to handle all expressions, in the general sense
+expression : (((IDENTIFIER | DIGITS*) | ARITHMETIC) CONDITIONAL ((IDENTIFIER | DIGITS*) | ARITHMETIC));
 // define variables with an identifier, a type of assignation, and arithmetic or value (or another variable)
 // should probably take another look to make sure you can do var + var, or digit + var or vice/versa, I don't think it's right as of now
-variableDef : IDENTIFIER ASSIGN (IDENTIFIER | OPERATORS | DIGITS) NEWLINE*;
+variableDef : IDENTIFIER ASSIGN (IDENTIFIER | OPERATORS | DIGITS) NEWLINE+;
+// Adding arithmetic support
+ARITHMETIC : ((IDENTIFIER | (DIGITS)*) OPERATORS (IDENTIFIER | (DIGITS)*));
 // Just lists of possible defined symbols
 ASSIGN : ('+=' | '-=' | '*=' | '/=' | '=');
 OPERATORS : ('+' | '-' | '*' | '/' | '%');
@@ -52,4 +56,8 @@ IDENTIFIER : (LETTERS | '_') (LETTERS | '_' | DIGITS)*;
 LETTERS : ([a-z]+ | [A-Z]+);
 // same
 DIGITS : ([0-9]+);
+// Implement comments - . is any token, followed by a newline to end comment
+// antlr4 throws a warning about greedy operator, but testing seems to be fine for these comments.
+COMMENT : '#' ((.)* NEWLINE) -> skip;
 NEWLINE : (('\r'? '\n' '\t'* ' '*) | ('\n' '\t'* ' '*));
+
