@@ -23,3 +23,5 @@ else:
 test7 = 8
 while(1):
     test8 = 9
+for i in test7:
+    test10 = 12

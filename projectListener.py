@@ -44,6 +44,15 @@ class projectListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by projectParser#forLoop.
+    def enterForLoop(self, ctx:projectParser.ForLoopContext):
+        pass
+
+    # Exit a parse tree produced by projectParser#forLoop.
+    def exitForLoop(self, ctx:projectParser.ForLoopContext):
+        pass
+
+
     # Enter a parse tree produced by projectParser#block.
     def enterBlock(self, ctx:projectParser.BlockContext):
         pass
