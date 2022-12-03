@@ -35,14 +35,5 @@ class projectListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by projectParser#identifier.
-    def enterIdentifier(self, ctx:projectParser.IdentifierContext):
-        pass
-
-    # Exit a parse tree produced by projectParser#identifier.
-    def exitIdentifier(self, ctx:projectParser.IdentifierContext):
-        pass
-
-
 
 del projectParser
