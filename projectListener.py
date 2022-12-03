@@ -26,6 +26,33 @@ class projectListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by projectParser#ifelse.
+    def enterIfelse(self, ctx:projectParser.IfelseContext):
+        pass
+
+    # Exit a parse tree produced by projectParser#ifelse.
+    def exitIfelse(self, ctx:projectParser.IfelseContext):
+        pass
+
+
+    # Enter a parse tree produced by projectParser#block.
+    def enterBlock(self, ctx:projectParser.BlockContext):
+        pass
+
+    # Exit a parse tree produced by projectParser#block.
+    def exitBlock(self, ctx:projectParser.BlockContext):
+        pass
+
+
+    # Enter a parse tree produced by projectParser#expression.
+    def enterExpression(self, ctx:projectParser.ExpressionContext):
+        pass
+
+    # Exit a parse tree produced by projectParser#expression.
+    def exitExpression(self, ctx:projectParser.ExpressionContext):
+        pass
+
+
     # Enter a parse tree produced by projectParser#variableDef.
     def enterVariableDef(self, ctx:projectParser.VariableDefContext):
         pass
