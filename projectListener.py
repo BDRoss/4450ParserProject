@@ -53,6 +53,33 @@ class projectListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by projectParser#functionDeclare.
+    def enterFunctionDeclare(self, ctx:projectParser.FunctionDeclareContext):
+        pass
+
+    # Exit a parse tree produced by projectParser#functionDeclare.
+    def exitFunctionDeclare(self, ctx:projectParser.FunctionDeclareContext):
+        pass
+
+
+    # Enter a parse tree produced by projectParser#functionCall.
+    def enterFunctionCall(self, ctx:projectParser.FunctionCallContext):
+        pass
+
+    # Exit a parse tree produced by projectParser#functionCall.
+    def exitFunctionCall(self, ctx:projectParser.FunctionCallContext):
+        pass
+
+
+    # Enter a parse tree produced by projectParser#args.
+    def enterArgs(self, ctx:projectParser.ArgsContext):
+        pass
+
+    # Exit a parse tree produced by projectParser#args.
+    def exitArgs(self, ctx:projectParser.ArgsContext):
+        pass
+
+
     # Enter a parse tree produced by projectParser#block.
     def enterBlock(self, ctx:projectParser.BlockContext):
         pass

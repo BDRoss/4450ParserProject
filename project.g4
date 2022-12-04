@@ -31,7 +31,7 @@ def nextToken(self):
 
 start : (value)* EOF;
 // Basic building block of code
-value : variableDef | ifelse | expression | whileLoop | forLoop;
+value : variableDef | ifelse | expression | whileLoop | forLoop | functionDeclare | functionCall;
 WS : [ ] + -> skip; //Apparently \r\n aren't whitespace, because variables aren't working with them in there
 // Allow for an arbitrary amount of elifs and a single else
 ifelse : (('if') '('? expression '):'? block) (('elif') '('? expression '):'? block)* (('else:') block)?;
@@ -39,13 +39,19 @@ ifelse : (('if') '('? expression '):'? block) (('elif') '('? expression '):'? bl
 whileLoop : ('while(' (expression | DIGITS*) '):'? block);
 // for loops of the form for (var in (expression?))
 forLoop : ('for' IDENTIFIER 'in' (IDENTIFIER | 'range(' (DIGITS* | IDENTIFIER) ')') ':' block) ;
+// function declare should probably be def identifier(args) block - need to define args, I think
+functionDeclare : 'def' IDENTIFIER '(' args '):'? block;
+// calls easier, identifier(args), should allow assignment to have functionCall on right side
+functionCall : IDENTIFIER '(' args ')';
+// args for functions, can just be an undetermined number of IDENTIFIERS
+args : (IDENTIFIER (','IDENTIFIER)*)*;
 // define blocks of code, which can include nested values (and more blocks). Thanks, antlr-denter
-block : INDENT (value+ ) NEWLINE? DEDENT?;
+block : INDENT (value+ ) DEDENT?;
 // handle expressions with variable identifiers - want this to be able to handle all expressions, in the general sense
 expression : (((IDENTIFIER | DIGITS*) | ARITHMETIC) CONDITIONAL ((IDENTIFIER | DIGITS*) | ARITHMETIC));
 // define variables with an identifier, a type of assignation, and arithmetic or value (or another variable)
 // should probably take another look to make sure you can do var + var, or digit + var or vice/versa, I don't think it's right as of now
-variableDef : IDENTIFIER ASSIGN (IDENTIFIER | OPERATORS | DIGITS) NEWLINE+;
+variableDef : IDENTIFIER ASSIGN (IDENTIFIER | OPERATORS | DIGITS | functionCall) NEWLINE+;
 // Adding arithmetic support
 ARITHMETIC : ((IDENTIFIER | (DIGITS)*) OPERATORS (IDENTIFIER | (DIGITS)*));
 // Just lists of possible defined symbols
