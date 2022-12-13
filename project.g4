@@ -34,7 +34,8 @@ start : (value)* EOF;
 value : 'pass' | variableDef | ifelse | expression | whileLoop | forLoop | functionDeclare | functionCall | NEWLINE;
 WS : [ ] + -> skip; //Apparently \r\n aren't whitespace, because variables aren't working with them in there
 // Allow for an arbitrary amount of elifs and a single else
-ifelse : ((('if') '('? expression '):'? block) ('elif' '('? expression '):'? block)* (('else:') block)?);
+//ifelse : ((('if') '('? expression '):'? block) ('elif' '('? expression '):'? block)* (('else:') block)?);
+ifelse : (('if') '('? expression '):'? block ('elif' '('? expression '):'? block)* (('else:') block)?);
 // WHILE
 whileLoop : ('while(' (expression | DIGITS*) '):'? block);
 // for loops of the form for (var in (expression?))
@@ -46,7 +47,7 @@ functionCall : IDENTIFIER '(' args ')' NEWLINE*;
 // args for functions, can just be an undetermined number of IDENTIFIERS
 args : (IDENTIFIER (','IDENTIFIER)*)*;
 // define blocks of code, which can include nested values (and more blocks). Thanks, antlr-denter
-block : INDENT (value+) DEDENT?;
+block : INDENT (value)* DEDENT?;
 // handle expressions with variable identifiers - want this to be able to handle all expressions, in the general sense
 expression : (((IDENTIFIER | DIGITS*) | ARITHMETIC) CONDITIONAL ((IDENTIFIER | DIGITS*) | ARITHMETIC)) NEWLINE*;
 // define variables with an identifier, a type of assignation, and arithmetic or value (or another variable)
@@ -67,5 +68,5 @@ DIGITS : ([0-9]+);
 // Implement comments - . is any token, followed by a newline to end comment
 // . operator was too greedy (couldn't exclude any character) so now the rule just looks for anything that isn't \n
 COMMENT : '#' (~('\n'))* NEWLINE -> skip;
-NEWLINE : (('\r'? '\n' '\t'* ' '*) | ('\n' '\t'* ' '*));
+NEWLINE : (('\r'? '\n' ' '* '\t'*) | ('\n' ' '* '\t'*));
 
